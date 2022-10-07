@@ -1,4 +1,5 @@
 const router = require('express').Router();
+const { session } = require('passport');
 const passport = require('passport');
 
 const db = require('../model/index');
@@ -10,8 +11,9 @@ router.get('/login',(req,res)=>{
 
 
 router.get('/logout',(req,res)=>{
-    res.send('logging out');
-})
+    req.logout();
+    res.redirect('/');
+});
 
 
 router.get('/google',
@@ -43,16 +45,16 @@ router.get(
                   },
           
             });
-            if (!checkUser){
+            if (checkUser){
               return res.status(404).json({
-                    message: "user doesn't exists",
+                    message: "user already exists"
                 })
-            }
+            };
             const user =await User.create({
                 name,
                 email,
                 role,
-            })
+            });
             return res.status(200).json({ message: "User created successfully", user });
         } catch (err) {
             res.status(500).send({message:err.message});

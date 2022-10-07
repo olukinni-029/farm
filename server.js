@@ -6,12 +6,14 @@ const cookiesSession = require('cookie-session');
  const passport = require('passport');
  const profileRoutes = require('./routes/profile.route');
  const packageRoutes = require('./routes/package.route');
+ const cookieParser = require('cookie-parser');
 
 const app = express();
 
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json());
 app.set('view engine','ejs');
+app.use(cookieParser()) 
 
 app.use(
   cookiesSession({
@@ -23,6 +25,10 @@ app.use(
 app.use('/auth',authRoutes);
 app.use('/profile',profileRoutes);
 app.use('/package',packageRoutes);
+
+app.get("/uploadPackage",(req,res)=>{
+  res.render("uploadPackage")
+});
 
 // connect to db
 const db = require("./model/index");

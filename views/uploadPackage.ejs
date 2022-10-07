@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FARM-POUCH</title>
+</head>
+<body>
+    <nav>
+        <li ><a href="/">Homepage</a></li>
+        <li><a href="/profile"> Dashboard</a></li>
+    </nav>
+    <main>
+        <form action="/package/farm"method="post">
+            Package Name
+            <input type="text"id="packageName" name="packageName"required>
+            Package Location
+            <input type="text"id="packageLocation"name="packageLocation"required>
+            Amount per unit
+            <input type="number" id="amountUnit"name="amountUnit"required></input>
+            Duration
+            <input type="text"id="duration"name="duration"required>
+            <button>Submit</button>
+        </form>
+    </main>
+</body>
+</html>

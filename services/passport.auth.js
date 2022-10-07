@@ -1,6 +1,5 @@
 const passport = require("passport");
 const db = require("../model");
-
  const User = db.user;
 
 
@@ -36,6 +35,7 @@ passport.use(
         googleId: profile.id,
         name: profile.displayName,
         picture: profile._json.picture,
+        email:profile.email,
       }).create();
       done(null, user);
     } 

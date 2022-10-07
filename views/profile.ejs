@@ -35,7 +35,7 @@
             font-size: 30px;
         }
       .other{
-        margin: 10px;
+        margin: 20px;
         padding: 5px 0;
         text-align: center;
       }
@@ -55,20 +55,20 @@ h2{
       }
     </style>
 </head>
-<% data.forEach(farm => { %>
 <body>
     <nav class="link">
         <ul >
+        <li ><a href="/auth/logout" >Logout</a></li>
         <li ><a href="/">Homepage</a></li>
-        <li><a href="/package">Farm Packages</a></li>
+        <li><a href="/package">Packages</a></li>
+        <li><a href="/uploadPackage">Create Package</a></li>
         </ul>
     </nav>
     <header class="other">
-        <h1 class="h1"><%= farm.name %>Welcome to you Dashboard</h1>
+        <h1 class="h1">Welcome to you Dashboard</h1>
     </header>
     <main>
-        <p>Profile picture</p>
+        <p></p>
     </main>
 </body>
-<% }) %>
 </html>
