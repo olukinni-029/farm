@@ -57,7 +57,7 @@ app.get("/", isAuth,(req, res) => {
   res.render("home", { user: req.user });
 });
 
-const port = process.env.Port || 2670;
+const port = process.env.PORT || 2670;
 
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}.`);
