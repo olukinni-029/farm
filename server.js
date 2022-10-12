@@ -60,5 +60,5 @@ app.get("/", isAuth,(req, res) => {
 const port = process.env.PORT || 2670;
 
 app.listen(port, () => {
-  console.log(`Server is running on http://localhost:${port}.`);
+  console.log(`Server is .running on http://localhost:${port}.`);
 });
