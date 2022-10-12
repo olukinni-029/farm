@@ -5,13 +5,11 @@ module.exports = (sequelize, Sequelize) => {
       unique: true,
       autoIncrement: true,
       primaryKey: true,
+      
     },
-    packageId: {
+    userId: {
       type: Sequelize.INTEGER,
     },
-    // userId: {
-    //   type: Sequelize.INTEGER,
-    // },
     quantity: {
       type: Sequelize.DECIMAL,
       allowNull: true,

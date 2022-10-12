@@ -14,11 +14,11 @@ passport.deserializeUser((id, done) => {
 });
 
 // passport.deserializeUser((id, done) => {
-//   User.findByPK(id).then((user) => {
-//       done(null, user);
-//   });
-// });
-
+  //   User.findByPK(id).then((user) => {
+    //       done(null, user);
+    //   });
+    // });
+  
 passport.use(
   new GoogleStrategy(
     {

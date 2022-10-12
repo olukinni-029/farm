@@ -20,9 +20,6 @@ module.exports = (sequelize, Sequelize) => {
     duration: {
       type: Sequelize.STRING,
     },
-    // status: {
-    //   type: Sequelize.BOOLEAN,
-    // },
   });
 
   return Package;

@@ -10,34 +10,19 @@ const User = db.user;
 
 exports.createInvestment = async (req, res) => {
   try {
-    console.log(req.session.passport)
-    const { quantity,totalAmount } = req.body;
+    const { quantity,totalAmount} = req.body;
     if (!quantity) {
       return res.status(404).json({ message: "content cant be empty" });
     }
-       const checkUser = await User.findOne({
-        where: {
-            id: req.param.userId,
-          },
-    });
-    if (checkUser){
-      return res.status(404).json({ message: "user profile exists"})
-    }else{
-         res.status(403).json({message: "user doesn't exists"});
+    const id = req.params.userId;
+    const checkUser = await User.findByPk(id);
+    if (!checkUser){
+       res.status(404).json({ message: "user doesn't exists"})
     }
-    const checkStatus = await Package.findOne({
-      where: {
-        id: req.params.id,
-      },
-    });
-    if (checkStatus) {
-      return res.send("Available");
-    } else {
-      res.send("Not Available");
-    }
+     const amountUnit = Package.amountUnit;
     const investment = await Investment.create({
       quantity,
-      totalAmount:(quantity*amountUnit),
+      totalAmount:quantity*amountUnit,
     });
     res
       .status(200)
@@ -47,13 +32,5 @@ exports.createInvestment = async (req, res) => {
   }
 };
 
-// Package.findByPk(id)
-//   .then(data => {
-//     if (!data)
-//     else res.send(data);
-//   })
-//   .catch(err => {
-//     res
-//       .status(500)
-//       .send({ message: "Error retrieving package with id=" + id });
-//   });
+
+

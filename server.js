@@ -1,13 +1,13 @@
 require("dotenv").config();
+require("./services/passport.auth");
 const express = require("express");
 const authRoutes = require("./routes/route.js");
 const cookiesSession = require("cookie-session");
 const passport = require("passport");
-const passportAuth = require("./services/passport.auth");
 const profileRoutes = require("./routes/profile.route");
 const packageRoutes = require("./routes/package.route");
 const investRoutes = require("./routes/investment.route");
-// const ejs = require("ejs");
+const ejs = require("ejs");
 const cookieParser = require("cookie-parser");
 
 const app = express();
@@ -28,22 +28,28 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.get("/uploadPackage", (req, res) => {
-  res.render("uploadPackage");
-});
 
 // connect to db
-const db = require("./model/index");
+const db =require('./model');
+// db.sequelize
+//   .authenticate()
+//   .then(() => {
+//     console.log("Connected to the database!");
+//   })
+//   .catch((err) => {
+//     console.log("Cannot connect to the database!", err);
+//     process.exit();
+//   });
+
 db.sequelize
-  .authenticate()
+  .sync()
   .then(() => {
-    console.log("Connected to the database!");
+    console.log('Drop and Resync Db');
+    console.log('Connected to database');
   })
   .catch((err) => {
-    console.log("Cannot connect to the database!", err);
-    process.exit();
+    console.log(err);
   });
-
 // sync
 db.sequelize.sync();
 
@@ -56,6 +62,10 @@ app.use("/auth", authRoutes);
 app.use("/profile", profileRoutes);
 app.use("/packages", packageRoutes);
 app.use("/invest", investRoutes);
+
+app.get("/uploadPackage", (req, res) => {
+  res.render("uploadPackage");
+});
 
 app.get("/", (req, res) => {
   res.render("home", { user: req.user });

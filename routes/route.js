@@ -1,5 +1,6 @@
 const router = require("express").Router();
-// const { session } = require('passport');
+// const isAuth = require('../middleware/isAuth');
+
 const passport = require("passport");
 
 const db = require("../model/index");
