@@ -1,5 +1,6 @@
 // const dbConfig = require("../config/db.config.js");
 const pg = require("pg");
+pg.defaults.ssl = true;
 // module.exports = db;
 const dbConfig = require("../config/db.config.js");
 
@@ -9,6 +10,12 @@ const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
   host: dbConfig.HOST,
   dialect: dbConfig.dialect,
   logging: false,
+  dialectOptions:{
+    ssl:{
+      require:true,
+      rejectUnauthorized:false
+    }
+  }
   // declaring pool is optional
   //  pool: {
   //  max: dbConfig.pool.max,
