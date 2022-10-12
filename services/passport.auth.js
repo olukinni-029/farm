@@ -13,12 +13,6 @@ passport.deserializeUser((id, done) => {
   done(null, user);
 });
 
-// passport.deserializeUser((id, done) => {
-  //   User.findByPK(id).then((user) => {
-    //       done(null, user);
-    //   });
-    // });
-  
 passport.use(
   new GoogleStrategy(
     {
@@ -27,6 +21,7 @@ passport.use(
       callbackURL: "/auth/google/redirect",
     },
     async (accessToken, refreshToken, profile, done) => {
+      console.log(profile);
       const existingUser = await User.findOne({
         where: {
           googleId: profile.id,
@@ -34,14 +29,15 @@ passport.use(
       });
       if (existingUser) {
         return done(null, existingUser);
+      } else {
+        const user = await User.create({
+          googleId: profile.id,
+          name: profile.displayName,
+          picture: profile._json.picture,
+          email: profile.email,
+        })
+        done(null, user);
       }
-      const user = await new User({
-        googleId: profile.id,
-        name: profile.displayName,
-        picture: profile._json.picture,
-        email: profile.email,
-      }).create();
-      done(null, user);
     }
   )
 );

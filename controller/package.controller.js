@@ -8,13 +8,14 @@ const User = db.user;
 // To create farm packages
 exports.createPackage = async (req, res) => {
   try {
+    console.log(req.user);
     //check if user is an admin
-    const user = await User.findOne({
-      where: {
+    const user = await User.findByPk({
+      
         id: req.userId,
-      },
+      
     });
-
+    console.log(user);
     if (user.role !== 'admin') {
       return res.status(403).send({
         message: 'Require Admin Role!',

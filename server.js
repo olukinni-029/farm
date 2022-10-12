@@ -17,46 +17,32 @@ app.set("view engine", "ejs");
 app.use(express.json());
 app.use(cookieParser());
 
+// connect to db
+const db = require("./model");
+const isAuth = require("./middleware/isAuth");
 app.use(
   cookiesSession({
-    maxAge: 24 * 60 * 60 * 1000, //24 hrs i.e a day, times 60 minutes in an hr , 60  in a minute, 1000 ms seconds in a second == 1 day in milliseconds
-    name: "session",
-    keys: [process.env.SESSION_KEY],
+    secret: "test",
+    resave: false,
+    saveUninitialized: false,
+    cookie: { httpOnly: true, secure: false, maxAge: 24 * 60 * 60 * 1000 },
   })
 );
 
 app.use(passport.initialize());
 app.use(passport.session());
 
-
-// connect to db
-const db =require('./model');
-// db.sequelize
-//   .authenticate()
-//   .then(() => {
-//     console.log("Connected to the database!");
-//   })
-//   .catch((err) => {
-//     console.log("Cannot connect to the database!", err);
-//     process.exit();
-//   });
-
 db.sequelize
   .sync()
   .then(() => {
-    console.log('Drop and Resync Db');
-    console.log('Connected to database');
+    console.log("Drop and Resync Db");
+    console.log("Connected to database");
   })
   .catch((err) => {
     console.log(err);
   });
 // sync
 db.sequelize.sync();
-
-// to force sync during development
-//db.sequelize.sync({ force: true }).then(() => {
-//console.log("Drop and re-sync db.");
-//});
 
 app.use("/auth", authRoutes);
 app.use("/profile", profileRoutes);
@@ -67,7 +53,8 @@ app.get("/uploadPackage", (req, res) => {
   res.render("uploadPackage");
 });
 
-app.get("/", (req, res) => {
+app.get("/", isAuth,(req, res) => {
+  console.log(req.user)
   res.render("home", { user: req.user });
 });
 

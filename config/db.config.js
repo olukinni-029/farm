@@ -3,7 +3,7 @@ module.exports = {
     USER: process.env.MYSQL_DB_USER,
     PASSWORD: process.env.MYSQL_DB_PASSWORD,
     DB: process.env.MYSQL_DB,
-    dialect: "mysql",
+    dialect: "postgres",
     // declaring pool is optional
     // pool: {
   //   max: 5,

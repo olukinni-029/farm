@@ -9,7 +9,7 @@ const {
 
 const router = express.Router();
 
-router.post("/farm/:userId",isAuth, createPackage);
+router.post("/farm/:userId", createPackage);
 router.get("/", findAllPackage);
 router.get("/:id", getPackage);
 
