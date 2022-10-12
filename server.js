@@ -41,8 +41,7 @@ db.sequelize
   .catch((err) => {
     console.log(err);
   });
-// sync
-db.sequelize.sync();
+
 
 app.use("/auth", authRoutes);
 app.use("/profile", profileRoutes);
