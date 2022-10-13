@@ -8,8 +8,7 @@ passport.serializeUser((user, done) => {
 });
 
 // Deserialize the user , just like decode a jwt token
-passport.deserializeUser((id, done) => {
-   const user = User.findByPk(id);
+passport.deserializeUser((user, done) => {
   done(null, user);
 });
 
@@ -19,7 +18,7 @@ passport.use(
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
       callbackURL: "https://farmpouch.herokuapp.com/auth/google/redirect",
-       passReqToCallback: true
+      passReqToCallback: true
     },
     async (accessToken, refreshToken, profile, done) => {
       console.log(profile);
