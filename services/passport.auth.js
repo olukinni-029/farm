@@ -4,7 +4,7 @@ const db = require("../model");
 const User = db.user;
 
 passport.serializeUser((user, done) => {
-  done(null, user.id);
+  done(null, user);
 });
 
 // Deserialize the user , just like decode a jwt token
@@ -24,7 +24,7 @@ passport.use(
       console.log(profile);
       const existingUser = await User.findOne({
         where: {
-          googleId: profile.id,
+          googleId: profile,
         },
       });
       if (existingUser) {
