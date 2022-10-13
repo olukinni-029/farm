@@ -18,13 +18,13 @@ passport.use(
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
       callbackURL: "https://farmpouch.herokuapp.com/auth/google/redirect",
-      passReqToCallback: true
+      
     },
     async (accessToken, refreshToken, profile, done) => {
       console.log(profile);
       const existingUser = await User.findOne({
         where: {
-          googleId: profile,
+          googleId: profile.id,
         },
       });
       if (existingUser) {
