@@ -2,20 +2,18 @@ const db = require("../model/index");
 const Package = db.package;
 const User = db.user;
 
-//  User.hasOne(Package);
-//  Package.belongsTo(User);
+  User.hasOne(Package);
+ Package.belongsTo(User);
 
 // To create farm packages
 exports.createPackage = async (req, res) => {
   try {
-    console.log(req.user);
     //check if user is an admin
     const user = await User.findByPk({
       
         id: req.userId,
       
     });
-    console.log(user);
     if (user.role !== 'admin') {
       return res.status(403).send({
         message: 'Require Admin Role!',

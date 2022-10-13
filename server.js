@@ -19,9 +19,10 @@ app.use(cookieParser());
 
 // connect to db
 const db = require("./model");
-const isAuth = require("./middleware/isAuth");
+// const isAuth = require("./middleware/isAuth");
 app.use(
   cookiesSession({
+    name: 'google-auth-session',
     secret: "test",
     resave: false,
     saveUninitialized: false,
@@ -52,7 +53,7 @@ app.get("/uploadPackage", (req, res) => {
   res.render("uploadPackage");
 });
 
-app.get("/", isAuth,(req, res) => {
+app.get("/",(req, res) => {
   console.log(req.user)
   res.render("home", { user: req.user });
 });
