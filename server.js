@@ -22,7 +22,7 @@ const db = require("./model");
 // const isAuth = require("./middleware/isAuth");
 app.use(
   cookiesSession({
-    name: 'google-auth-session',
+    // name: 'google-auth-session',
     secret: "test",
     resave: false,
     saveUninitialized: false,
