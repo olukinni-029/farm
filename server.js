@@ -1,6 +1,7 @@
 require("dotenv").config();
-require("./services/passport.auth");
 const express = require("express");
+const jwt = require("jsonwebtoken");
+require("./services/passport.auth");
 const authRoutes = require("./routes/route.js");
 const cookiesSession = require("cookie-session");
 const passport = require("passport");
@@ -43,6 +44,27 @@ db.sequelize
     console.log(err);
   });
 
+app.get(
+  "/auth/google/redirect",
+  passport.authenticate("google", { session: false }),
+  (req, res) => {
+    jwt.sign(
+      { user: req.user },
+      "secretKey",
+      { expiresIn: "1h" },
+      (err, token) => {
+        if (err) {
+          return res.json({
+            token: null,
+          });
+        }
+        res.json({
+          token,
+        });
+      }
+    );
+  }
+);
 
 app.use("/auth", authRoutes);
 app.use("/profile", profileRoutes);
@@ -53,8 +75,8 @@ app.get("/uploadPackage", (req, res) => {
   res.render("uploadPackage");
 });
 
-app.get("/",(req, res) => {
-  console.log(req.user)
+app.get("/", (req, res) => {
+  console.log(req.user);
   res.render("home", { user: req.user });
 });
 

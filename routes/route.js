@@ -1,6 +1,7 @@
 const router = require("express").Router();
 // const isAuth = require('../middleware/isAuth');
 
+
 const passport = require("passport");
 
 const db = require("../model/index");
@@ -23,9 +24,9 @@ router.get(
 );
 
 // users signing in with google accounts
-router.get("/google/redirect", passport.authenticate("google"), (req, res) => {
+router.get("/google/redirect", passport.authenticate("google",{session:false}), (req, res) => {
   res.redirect("/profile");
-  //  res.send(req.user);
+  console.log(req.user);
 });
 
 // admin route
